@@ -11,6 +11,7 @@ __all__ = (
 
 from os import path, system
 
+alsadevice=""
 
 def play_sound(sound):
     '''
@@ -19,4 +20,4 @@ def play_sound(sound):
     :param str sound: The name of the sound file
     '''
     file_path = path.join(path.dirname(__file__), 'sounds', sound)
-    system('aplay -q {}'.format(file_path))
+    system(('aplay '+alsadevice+' -q {}').format(file_path))
