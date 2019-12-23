@@ -9,7 +9,7 @@ __all__ = (
     'TimerHandler',
 )
 
-from threading import Thread
+from threading import Thread,Timer
 from logging import getLogger
 from time import time
 
@@ -29,7 +29,7 @@ class TimerHandler(Thread):
         Class constructor.
 
         :param mopidy.core.Core core: The mopidy core instance
-        :param threading.Event stop_event: The stop event
+        :param Event stop_event: The stop event
         '''
         super(TimerHandler, self).__init__()
 
@@ -44,8 +44,8 @@ class TimerHandler(Thread):
         '''
         ## Setup code here
 
-        self.shutdownTimer=threading.Timer(5400,self.shutdownTimer_callback)
-        self.updateTimer=threading.Timer(10,self.updateTimer_callback,[self])
+        self.shutdownTimer=Timer(5400,self.shutdownTimer_callback)
+        self.updateTimer=Timer(10,self.updateTimer_callback,[self])
         
         self.stop_event.wait()
         GPIO.cleanup()  # pylint: disable=no-member
@@ -53,7 +53,7 @@ class TimerHandler(Thread):
     def shutdownTimer_reset(self):
         LOGGER.info('Timer reset')
         self.shutdownTimer.cancel()
-        self.shutdownTimer=threading.Timer(5400,self.shutdownTimer_callback)
+        self.shutdownTimer=Timer(5400,self.shutdownTimer_callback)
 
     def updateTimer_callback(self):
         try:
