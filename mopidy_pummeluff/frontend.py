@@ -4,6 +4,7 @@ Python module for Mopidy Pummeluff frontend.
 '''
 
 from __future__ import absolute_import, unicode_literals, print_function
+import requests
 
 __all__ = (
     'PummeluffFrontend',
@@ -47,3 +48,10 @@ class PummeluffFrontend(pykka.ThreadingActor, mopidy_core.CoreListener):
         stop their operations.
         '''
         self.stop_event.set()
+
+
+    def tracklist_changed(self):
+        requests.get('http://localhost:5000/playlist_changed')
+
+    def playback_state_changed(self, old_state, new_state):
+        requests.get('http://localhost:5000/'+new_state)
