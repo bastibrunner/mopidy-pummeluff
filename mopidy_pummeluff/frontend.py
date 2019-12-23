@@ -34,6 +34,7 @@ class PummeluffFrontend(pykka.ThreadingActor, mopidy_core.CoreListener):
         self.stop_event   = Event()
         self.gpio_handler = GPIOHandler(core=core, stop_event=self.stop_event)
         self.tag_reader   = TagReader(core=core, stop_event=self.stop_event)
+        self.timer_handler = TimerHandler(core=core, stop_event=self.stop_event)
 
     def on_start(self):
         '''
@@ -41,6 +42,11 @@ class PummeluffFrontend(pykka.ThreadingActor, mopidy_core.CoreListener):
         '''
         self.gpio_handler.start()
         self.tag_reader.start()
+        self.timer_handler.start()
+        try:
+            requests.get('http://localhost:5000/on_start')
+        except:
+            pass
 
     def on_stop(self):
         '''
@@ -51,7 +57,15 @@ class PummeluffFrontend(pykka.ThreadingActor, mopidy_core.CoreListener):
 
 
     def tracklist_changed(self):
-        requests.get('http://localhost:5000/playlist_changed')
+        self.timer_handler.shutdownTimer_reset()
+        try:
+            requests.get('http://localhost:5000/playlist_changed')
+        except:
+            pass
 
     def playback_state_changed(self, old_state, new_state):
-        requests.get('http://localhost:5000/'+new_state)
+        self.timer_handler.shutdownTimer_reset()
+        try:
+            requests.get('http://localhost:5000/'+new_state)
+        except:
+            pass

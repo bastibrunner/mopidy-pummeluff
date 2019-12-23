@@ -63,7 +63,6 @@ class TagReader(Thread):
         prev_uid  = ''
 
         while not self.stop_event.is_set():
-            requests.get('http://localhost:5000/tag_wait')
             rfid.wait_for_tag()
 
             try:
@@ -93,12 +92,19 @@ class TagReader(Thread):
 
         error, data = rfid.request()  # pylint: disable=unused-variable
         if error:
-            requests.get('http://localhost:5000/tag_error')
+            try:
+                requests.get('http://localhost:5000/tag_error')
+            except: 
+                pass
+
             raise ReadError('Could not read tag')
 
         error, uid_chunks = rfid.anticoll()
         if error:
-            requests.get('http://localhost:5000/tag_error')
+            try:
+                requests.get('http://localhost:5000/tag_error')
+            except: 
+                pass
             raise ReadError('Could not read UID')
 
         uid = '{0[0]:02X}{0[1]:02X}{0[2]:02X}{0[3]:02X}'.format(uid_chunks)  # pylint: disable=invalid-format-index
@@ -113,13 +119,20 @@ class TagReader(Thread):
         tag = Tag(uid)
 
         if tag.registered:
-            requests.get('http://localhost:5000/tag_ok')
+            try:
+                requests.get('http://localhost:5000/tag_ok')
+            except: 
+                pass
             LOGGER.info('Triggering action of registered tag')
             play_sound('success.wav')
             tag(self.core)
 
         else:
-            requests.get('http://localhost:5000/tag_unknown')
+            try:
+                requests.get('http://localhost:5000/tag_unknown')
+            except: 
+                pass
+
             LOGGER.info('Tag is not registered, thus doing nothing')
             play_sound('fail.wav')
 

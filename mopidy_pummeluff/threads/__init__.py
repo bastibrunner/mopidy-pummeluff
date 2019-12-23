@@ -7,3 +7,4 @@ from __future__ import absolute_import, unicode_literals, print_function
 
 from .gpio_handler import *
 from .tag_reader import *
+from .timer_handler import *
