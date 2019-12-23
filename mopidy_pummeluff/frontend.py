@@ -18,6 +18,8 @@ from mopidy import core as mopidy_core
 
 from .threads import GPIOHandler, TagReader, TimerHandler
 
+import mopidy_pummeluff.sound
+
 
 LOGGER = getLogger(__name__)
 
@@ -35,6 +37,8 @@ class PummeluffFrontend(pykka.ThreadingActor, mopidy_core.CoreListener):
         self.gpio_handler = GPIOHandler(core=core, stop_event=self.stop_event)
         self.tag_reader   = TagReader(core=core, stop_event=self.stop_event)
         self.timer_handler = TimerHandler(core=core, stop_event=self.stop_event)
+        if (config['audio']['output'].split(" ")[2] == alsasink):
+            sound.alsadevice = "-D "+config['audio']['output'].split(" ")[1]
 
     def on_start(self):
         '''

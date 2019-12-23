@@ -21,9 +21,6 @@ LOGGER = getLogger(__name__)
 
 class TimerHandler(Thread):
     
-    shutdownTimer=None
-    updateTimer=None
-
     def __init__(self, core, stop_event):
         '''
         Class constructor.
