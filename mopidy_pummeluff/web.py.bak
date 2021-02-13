@@ -3,7 +3,7 @@
 Python module for Mopidy Pummeluff web classes.
 '''
 
-
+from __future__ import absolute_import, unicode_literals
 
 __all__ = (
     'LatestHandler',
@@ -80,7 +80,7 @@ class RegistryHandler(RequestHandler):  # pylint: disable=abstract-method
         '''
         tags_list = []
 
-        for tag in list(tags.Tag.all().values()):
+        for tag in tags.Tag.all().values():
             tags_list.append(tag.dict)
 
         data = {
