@@ -20,31 +20,5 @@ setup(
     license='MIT',
     author='confirm IT solutions',
     description='Pummeluff is a Mopidy extension which allows you to control Mopidy via RFID tags',
-    long_description=open('README.rst').read(),
-    packages=find_packages(exclude=[
-        'tests',
-        'tests.*',
-    ]),
-    zip_safe=False,
-    include_package_data=True,
-    setup_requires=[
-        'setuptools_scm',
-    ],
-    install_requires=['setuptools'] + requirements,
-    extras_require={
-        'develop': requirements_dev,
-    },
-    entry_points={
-        b'mopidy.ext': [
-            'pummeluff = mopidy_pummeluff:Extension',
-        ],
-    },
-    classifiers=[
-        'Environment :: No Input/Output (Daemon)',
-        'Intended Audience :: End Users/Desktop',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2',
-        'Topic :: Multimedia :: Sound/Audio :: Players',
-    ],
+    long_description=open('README.rst').read()
 )
