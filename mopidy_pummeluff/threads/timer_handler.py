@@ -14,7 +14,6 @@ from logging import getLogger
 from time import time
 
 from mopidy_pummeluff.actions import shutdown, play_pause, stop
-from mopidy_pummeluff.sound import play_sound
 
 LOGGER = getLogger(__name__)
 

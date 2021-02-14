@@ -16,7 +16,6 @@ from time import time
 import RPi.GPIO as GPIO
 
 from mopidy_pummeluff.actions import shutdown, play_pause
-from mopidy_pummeluff.sound import play_sound
 
 LOGGER = getLogger(__name__)
 
@@ -78,6 +77,5 @@ class GPIOHandler(Thread):
 
         if (GPIO.input(pin) == GPIO.LOW) and (now - before > 0.25):
             LOGGER.debug('Button at pin %s was pushed', pin)
-            play_sound('success.wav')
             self.button_pins[pin](self.core)
             self.timestamps[pin] = now

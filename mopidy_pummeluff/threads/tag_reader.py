@@ -17,7 +17,6 @@ import RPi.GPIO as GPIO
 from pirc522 import RFID
 
 from mopidy_pummeluff.tags import Tag
-from mopidy_pummeluff.sound import play_sound
 
 import requests
 
@@ -124,7 +123,6 @@ class TagReader(Thread):
             except: 
                 pass
             LOGGER.info('Triggering action of registered tag')
-            play_sound('success.wav')
             tag(self.core)
 
         else:
@@ -134,7 +132,6 @@ class TagReader(Thread):
                 pass
 
             LOGGER.info('Tag is not registered, thus doing nothing')
-            play_sound('fail.wav')
 
         tag.scanned      = time()
         TagReader.latest = tag
