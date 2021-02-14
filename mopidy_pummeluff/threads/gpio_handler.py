@@ -56,7 +56,7 @@ class GPIOHandler(Thread):
 
         for pin in self.button_pins:
             LOGGER.debug('Setup pin %s as button pin', pin)
-            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.setup(pin, GPIO.IN)
             GPIO.add_event_detect(pin, GPIO.RISING, callback=lambda pin: self.button_push(pin))  # pylint: disable=unnecessary-lambda
 
         LOGGER.debug('Setup pin %s as LED pin', self.led_pin)
