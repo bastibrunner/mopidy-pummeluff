@@ -47,7 +47,7 @@ class Tag(object):
         if cls is Tag and cls is not new_cls:
             instance = new_cls(uid=uid)
         else:
-            instance = super(Tag, cls).__new__(cls, uid=uid)
+            instance = super(Tag, cls).__new__(cls)
 
         instance.registered = bool(tag)
         instance.alias      = tag.get('alias')
